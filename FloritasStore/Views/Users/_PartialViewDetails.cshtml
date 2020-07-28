@@ -1,0 +1,55 @@
+﻿@model FloritasStore.ViewModels.Users.UserDetailsViewModel
+
+@{
+    var nameAction = ViewContext.RouteData.Values["Action"].ToString().ToLower();
+    var carOutLineColor = nameAction == "details" ? "card-primary" : "card-danger";
+    //var userPhoto = Url.Action("GetPhotoUser", "Users", new { id = Model.Id });
+}
+
+<div class="card @carOutLineColor card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-folder"></i>
+            Usuário
+        </h3>
+    </div>
+    <div class="card-body">        
+        
+        <dl>            
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Cpf)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Cpf)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt>
+                Telefone:
+            </dt>
+            <dd>
+                @(Model.PhoneNumber ?? "Telefone não Cadastrado" )
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Role)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Role)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+
+

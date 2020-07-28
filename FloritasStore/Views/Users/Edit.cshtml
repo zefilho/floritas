@@ -1,0 +1,145 @@
+﻿@model FloritasStore.ViewModels.Users.EditUserViewModel
+
+@section Css{ 
+    <link rel="stylesheet" href="~/adminlte/plugins/croppie/croppie.css" />
+}
+
+<div class="container-fluid pb-2">
+    <div class="col-md-8">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Editar Usuário</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form enctype="multipart/form-data" asp-action="Edit" role="form">
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="card-body">
+
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" style="" placeholder="Digite o Nome Completo" />
+                        <span asp-validation-for="Name" class="text-danger-validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Cpf"></label>
+                        <input asp-for="Cpf" class="form-control" style="" data-inputmask="'mask': '999.999.999-99'" data-mask="" inputmode="text" />
+                        <span asp-validation-for="Cpf" class="text-danger-validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber"></label>
+                        <input asp-for="PhoneNumber" class="form-control" style="" data-inputmask="'mask': '(99) 99999-9999'" data-mask="" inputmode="text" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger-validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" style="" placeholder="Digite o E-mail" />
+                        <span asp-validation-for="Email" class="text-danger-validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="roleID"></label>
+                        <select class="form-control custom-select" asp-for="roleID" asp-items="ViewBag.Roles">
+                        </select>
+                        <span asp-validation-for="roleID" class="text-danger-validation"></span>
+                    </div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="form-group">
+                            <label asp-for="CompanyId"></label>
+                            <select class="form-control custom-select" asp-for="CompanyId" asp-items="ViewBag.Company" disabled="">
+                                <option selected value="0">Nenhuma Empresa</option>
+                            </select>
+                            <span asp-validation-for="CompanyId" class="text-danger-validation"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="hidden" asp-for="CompanyId" value="@(Convert.ToInt32(User.FindFirst("Company").Value))" />
+                    }                                
+                </div>
+                <div class="card-footer">
+                    <a asp-action="Index" class="btn btn-default float-right" role="button">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/adminlte/plugins/select2/js/select2.full.min.js"></script>
+    <script src="/adminlte/plugins/moment/moment.min.js"></script>
+    <script src="/adminlte/plugins/inputmask/jquery.inputmask.min.js"></script>
+    <script src="~/adminlte/plugins/croppie/croppie.js"></script>
+   
+    <script src="~/js/form.js"></script>
+    <script src="~/js/attributes/cpf.js"></script>
+
+    <script>
+
+        $('[data-mask]').inputmask();
+
+    </script>
+    
+   
+    @if (User.IsInRole("Admin"))
+    {
+        <script src="~/js/attributes/validcompany.js"></script>
+
+        <script>            
+
+            if ($("#CompanyId").children(":selected").val() != 0) {
+                $("#CompanyId").removeAttr("disabled");
+                //$("#CompanyId").addClass("icon-disable");
+            }
+
+            $('#roleID').blur(function () {
+                var textRole = $(this).children(":selected").text();
+
+                //var formT = $('form[role]').validate();
+
+                var company = $("#CompanyId")
+                if (textRole !== "Administrador") {
+                    company.removeAttr("disabled")
+                    //company.addClass("icon-disable");
+                } else {
+                    if (!company.is("disabled")) {
+
+                        company.attr("disabled", "")
+                        company.removeClass("is-invalid");
+                        company.val("0")
+
+                        var $form = $('form[role]');
+                        //// get validator object
+                        var $validator = $form.validate();
+
+                        //// get errors that were created using jQuery.validate.unobtrusive
+                        var $errors = $form.find(".field-validation-error span#CompanyId-error");
+
+                        //// trick unobtrusive to think the elements were succesfully validated
+                        //// this removes the validation messages
+                        $errors.each(function () {
+                            $validator.settings.success($(this));
+                        });
+
+                        //$validator.resetForm();
+
+                    }
+                }
+
+            })
+        </script>
+    }
+
+}

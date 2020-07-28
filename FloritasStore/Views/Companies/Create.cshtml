@@ -1,0 +1,43 @@
+﻿@model FloritasStore.Models.Company
+
+@{
+
+}
+
+<div class="container-fluid pb-2">
+    <div class="col-md-10">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Cadastrar Empresa</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form asp-action="Create" role="form">
+                <div class="card-body">
+                    <partial name="./_PartialViewForm.cshtml" model="Model" />
+                </div>
+
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <a asp-action="Index" class="btn btn-default float-right" role="button">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="/adminlte/plugins/inputmask/jquery.inputmask.min.js"></script>
+
+    <script src="~/js/form.js"></script>    
+
+    <script>
+        $('[data-mask]').inputmask()
+    </script>
+}

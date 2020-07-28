@@ -1,0 +1,84 @@
+﻿@page "/login"
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Autenticação";
+    Layout = "/Views/Shared/_Layout.cshtml";    
+}
+
+
+@section CSS {
+    <link rel="stylesheet" href="/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+}
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>Floristas</b>STORE
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Faça login para iniciar sua sessão.</p>
+                <form method="post">
+                    @*<div asp-validation-summary="All" class="text-danger-validation"></div>*@
+                    <div class="text-center text-danger-validation pb-3">@ViewData["ErrorLogin"]</div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="Input.Email" class="form-control" placeholder="Email">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Input.Email" class="text-danger-validation"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input asp-for="Input.Password" class="form-control" placeholder="Senha">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Input.Password" class="text-danger-validation"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" asp-for="Input.RememberMe">
+                                <label asp-for="Input.RememberMe">
+                                    Lembrar-me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Acessar</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/adminlte/dist/js/adminlte.min.js"></script>
+
+    <partial name="_ValidationScriptsPartial" />
+
+        
+</body>
+
+

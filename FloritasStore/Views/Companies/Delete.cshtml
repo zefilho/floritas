@@ -1,0 +1,44 @@
+﻿@model FloritasStore.Models.Company
+
+@{
+    bool errorTest = (ViewData["Error"] is null);
+}
+
+@section Css{
+    <link rel="stylesheet" href="/adminlte/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+}
+
+<div class="container-fluid pb-2">
+    <div class="col-md-10">
+
+        @if (!errorTest)
+        {
+
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-ban"></i> Alerta!</h5>
+                @ViewData["Error"]
+            </div>
+
+        }
+
+        <h3>Tem certeza de que deseja excluir isso?</h3>
+
+        <partial name="./_PartialViewDetails.cshtml" />
+
+        <form asp-action="Delete">
+            @*<input type="hidden" asp-for="@Model.Id" />*@
+            <input type="submit" value="Apagar" class="btn btn-danger" @(!errorTest ? "disabled" : "") />
+            <a asp-action="Index" class="btn btn-default" role="button">
+                <i class="fa fa-reply"></i>
+                Voltar
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="/adminlte/plugins/toastr/toastr.min.js"></script>
+    <script src="/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
+}
